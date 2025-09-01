@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>shoot.wav</file>
+    </qresource>
+</RCC>
