@@ -4,7 +4,7 @@
 #include <QTimer>
 #include "TimerLogic.h"
 #include "Hero.h"
-
+#include "Enemy.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +19,10 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("timerLogic", &timerLogic);
 
     Hero hero(100, 100);
+    Enemy enemy(100,100);
+
     engine.rootContext()->setContextProperty("hero", &hero); // <<< имя "hero"
+    engine.rootContext()->setContextProperty("enemy", &enemy);
 
     // Создаём QTimer, который каждую секунду вызывает tick()
     QTimer timer;

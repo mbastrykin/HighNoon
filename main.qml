@@ -32,12 +32,29 @@ ApplicationWindow {
     }*/
 
     Rectangle {         // ВРАГ
-           width: 100
-           height: 100
-           color: "red"
-           anchors.horizontalCenter: parent.horizontalCenter
-               anchors.top: parent.top
-               anchors.topMargin: 50
+        width: 100
+        height: 100
+        color: enemy.color
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 20
+    }
+
+    Button {    // выстрел
+
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        height: parent.height / 2
+
+        background: Rectangle {
+           color: "transparent"
+        }
+        onClicked: {
+            enemy.shooting();
+            score++
+
+    }
        }
 
         Rectangle {         // ПЕРСОНАЖ
