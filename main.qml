@@ -17,7 +17,14 @@ ApplicationWindow {
 
     property int score: settings.savedScore
 
-
+    Text {
+        text: "Выстрел (осталось " + hero.ammo + ")"
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.margins: 20  // отступ от краёв
+        font.pixelSize: 20   // размер текста
+        color: "black"       // цвет текста
+    }
 
    /* Image {
             anchors.fill: parent
@@ -45,9 +52,15 @@ ApplicationWindow {
         }
 
         Button {
-            text: "Выстрел (осталось " + hero.ammo + ")"
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            height: parent.height / 2
+
+            background: Rectangle {
+               color: "transparent"
+            }
             onClicked: {
 
                 hero.shooting()
