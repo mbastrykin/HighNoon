@@ -18,6 +18,10 @@ public:
         }
     }
 
+void weaponspread(){ // ПОД вопросом
+
+}
+
 signals:
     void ammoChanged();
 

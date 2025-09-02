@@ -7,7 +7,7 @@ ApplicationWindow {
     visible: true
     width: 400
     height: 600
-    title: "Mini Game"
+    title: "HighNoon"
 
 
     Settings {
@@ -17,13 +17,13 @@ ApplicationWindow {
 
     property int score: settings.savedScore
 
-    Text {
-        text: "Выстрел (осталось " + hero.ammo + ")"
+    Text {          // ТЕКСТ ВЫСТРЕЛА
+        text: "Выстрел " + hero.ammo
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.margins: 20  // отступ от краёв
-        font.pixelSize: 20   // размер текста
-        color: "black"       // цвет текста
+        anchors.margins: 20
+        font.pixelSize: 20
+        color: "black"
     }
 
    /* Image {
@@ -31,7 +31,7 @@ ApplicationWindow {
             source: "images/hero.png"
     }*/
 
-    Rectangle {
+    Rectangle {         // ВРАГ
            width: 100
            height: 100
            color: "red"
@@ -40,9 +40,7 @@ ApplicationWindow {
                anchors.topMargin: 50
        }
 
-
-
-        Rectangle {
+        Rectangle {         // ПЕРСОНАЖ
             width: 100
             height: 100
             color: hero.color
@@ -51,7 +49,7 @@ ApplicationWindow {
             anchors.bottomMargin: 20
         }
 
-        Button {
+        Button {    // выстрел
 
             anchors.left: parent.left
             anchors.right: parent.right
@@ -69,7 +67,7 @@ ApplicationWindow {
         }
 
     }
-    Column {
+    Column {        // ОЧКИ (ТЕСт)
         anchors.centerIn: parent
         spacing: 20
 
@@ -88,7 +86,7 @@ ApplicationWindow {
             }
         }*/
 
-        Button {
+        Button {            //КНОПКА ПЕРЕЗАПУСКА ОЧКОВ(ТЕСТ)
             text: "Reset"
             onClicked: {
                 score = 0
@@ -97,7 +95,7 @@ ApplicationWindow {
         }
 
 
-        Label {
+        Label {             //ВРЕМЯ
             text: "Timer: " + timerLogic.seconds
             font.pixelSize: 28
             width: parent.width
