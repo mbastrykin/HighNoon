@@ -1,29 +1,28 @@
+#include "Hero.h"
 
-class Hero{
+Hero::Hero(float x, float y, QObject *parent)
+    : QObject(parent), coordinateXP(x), coordinateYP(y)
+{
+    weapon = new Weapon(bullets, this);
+    connect(weapon, &Weapon::ammoChanged, this, &Hero::ammoChanged);
+}
 
-    bool PlayerIsShooting = false;bool lifePlayer;
-    float x; float y;
-
-    Hero(float x, float y){
-
+void Hero::shooting() {
+    if (weapon->ammo() > 0) {
+        weapon->shoot();
+        m_color = "red";      // красный во время нажатия
+        emit colorChanged();
     }
+}
 
-    ~Hero(){
+void Hero::stopShooting() {
+    m_color = "green";        // обратно в зелёный
+    emit colorChanged();
+}
 
-    }
+void Hero::death() {
+    lifePlayer = false;
+}
 
-
-    void shooting(){
-        //При нажатии на низ экрана стреляет должен сравнивать время нажатия врага
-    }
-
-    void death(){
-        if(!lifePlayer){
-        //Проигрывание анимации смерти
-        }
-    }
-
-    void animVictory(){
-        //Анимация победы в бою
-    }
-};
+void Hero::animVictory() {
+}

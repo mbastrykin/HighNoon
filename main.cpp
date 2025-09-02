@@ -3,7 +3,7 @@
 #include <QQmlContext>
 #include <QTimer>
 #include "TimerLogic.h"
-#include "Hero.cpp"
+#include "Hero.h"
 
 
 int main(int argc, char *argv[])
@@ -17,6 +17,9 @@ int main(int argc, char *argv[])
 
     TimerLogic timerLogic;
     engine.rootContext()->setContextProperty("timerLogic", &timerLogic);
+
+    Hero hero(100, 100);
+    engine.rootContext()->setContextProperty("hero", &hero); // <<< имя "hero"
 
     // Создаём QTimer, который каждую секунду вызывает tick()
     QTimer timer;

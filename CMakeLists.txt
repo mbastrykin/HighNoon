@@ -33,6 +33,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         GameLogic.cpp
         Enemy.cpp
         Weapon.cpp
+        Hero.h
+        Weapon.h
 
     )
 # Define target properties for Android with Qt 6 as:

@@ -1,4 +1,4 @@
-#include "Hero.cpp"
+/*#include "Hero.cpp"
 
 
 
@@ -25,5 +25,6 @@ class Enemy{
             isEnemyShoot = true;
         }
 
-    }*/
+    }
 };
+*/

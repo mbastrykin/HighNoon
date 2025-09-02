@@ -19,10 +19,10 @@ ApplicationWindow {
 
 
 
-    Image {
+   /* Image {
             anchors.fill: parent
             source: "images/hero.png"
-    }
+    }*/
 
     Rectangle {
            width: 100
@@ -33,23 +33,29 @@ ApplicationWindow {
                anchors.topMargin: 50
        }
 
-       // Зеленый квадрат
-       Rectangle {
-           width: 100
-           height: 100
-           color: "green"
-           anchors.horizontalCenter: parent.horizontalCenter
-               anchors.bottom: parent.bottom
-               anchors.bottomMargin: 50
-       }
 
 
-       SoundEffect {
-           id: shootSound
-           source: "qrc:/sounds/shoot.wav"
-           volume: 1.0
-       }
+        Rectangle {
+            width: 100
+            height: 100
+            color: hero.color
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 20
+        }
 
+        Button {
+            text: "Выстрел (осталось " + hero.ammo + ")"
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            onClicked: {
+
+                hero.shooting()
+                score++
+                settings.savedScore = score
+        }
+
+    }
     Column {
         anchors.centerIn: parent
         spacing: 20
@@ -61,14 +67,13 @@ ApplicationWindow {
             horizontalAlignment: Text.AlignHCenter
         }
 
-        Button {
+       /* Button {
             text: "+1"
             onClicked: {
                 shootSound.play()
-                score++
-                settings.savedScore = score
+
             }
-        }
+        }*/
 
         Button {
             text: "Reset"
