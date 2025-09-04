@@ -40,7 +40,7 @@ ApplicationWindow {
         anchors.topMargin: 20
     }
 
-    Button {    // выстрел
+    /*Button {    // выстрел
 
         anchors.left: parent.left
         anchors.right: parent.right
@@ -55,7 +55,7 @@ ApplicationWindow {
             score++
 
     }
-       }
+       }*/
 
         Rectangle {         // ПЕРСОНАЖ
             width: 100
@@ -84,7 +84,7 @@ ApplicationWindow {
         }
 
     }
-    Column {        // ОЧКИ (ТЕСт)
+    Column {        // ОЧКИ (ТЕСт) Если враг умирает, то очки прибавляются
         anchors.centerIn: parent
         spacing: 20
 

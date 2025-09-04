@@ -6,6 +6,10 @@ Enemy::Enemy(float x, float y, QObject *parent)
 {
     weapon = new Weapon(bullets, this);
     connect(weapon, &Weapon::ammoChanged, this, &Enemy::ammoChanged);
+
+    QTimer *enemyTimer = new QTimer(this);
+    connect(enemyTimer, &QTimer::timeout, this, &Enemy::shooting);
+    enemyTimer->start(1000);
 }
 
 void Enemy::shooting() {

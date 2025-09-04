@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
     // Создаём QTimer, который каждую секунду вызывает tick()
     QTimer timer;
     QObject::connect(&timer, &QTimer::timeout, &timerLogic, &TimerLogic::tick);
+
     timer.start(1000);
 
     const QUrl url(u"qrc:/main.qml"_qs);

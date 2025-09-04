@@ -14,7 +14,7 @@ void Hero::shooting() {
         m_color = "red";
         emit colorChanged();
 
-        // Вернуть цвет через 200 мс
+        // Вернуть цвет через 100 мс
         QTimer::singleShot(100, this, [this]() {
             m_color = "green";
             emit colorChanged();

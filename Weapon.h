@@ -1,5 +1,6 @@
 #pragma once
 #include <QObject>
+#include <random>
 
 class Weapon : public QObject {
     Q_OBJECT
