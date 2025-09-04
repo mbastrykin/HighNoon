@@ -9,7 +9,7 @@ Enemy::Enemy(float x, float y, QObject *parent)
 
     QTimer *enemyTimer = new QTimer(this);
     connect(enemyTimer, &QTimer::timeout, this, &Enemy::shooting);
-    enemyTimer->start(1000);
+    enemyTimer->start(100);
 }
 
 void Enemy::shooting() {
@@ -18,16 +18,17 @@ void Enemy::shooting() {
         m_color = "blue";
         emit colorChanged();
 
-        // Вернуть цвет через 200 мс
+        // Вернуть цвет через 100 мс
         QTimer::singleShot(100, this, [this]() {
             m_color = "black";
             emit colorChanged();
         });
     }
+
 }
 
 void Enemy::stopShooting() {
-    m_color = "blue";      //Обратно в синий
+    m_color = "black";      //Обратно в синий
     emit colorChanged();
 }
 

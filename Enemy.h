@@ -19,6 +19,8 @@ public:
     Q_INVOKABLE void death();
     Q_INVOKABLE void animVictory();
 
+
+
 signals:
     void colorChanged();
     void ammoChanged();

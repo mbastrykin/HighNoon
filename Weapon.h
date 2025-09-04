@@ -11,6 +11,10 @@ public:
         : QObject(parent), ammoPtr(&ammo) {}
 
     int ammo() const { return *ammoPtr; }
+    void setAmmo(int value) {
+        *ammoPtr = value;
+        emit ammoChanged();
+    }
 
     Q_INVOKABLE void shoot() {
         if (*ammoPtr > 0) {
@@ -18,7 +22,6 @@ public:
             emit ammoChanged();
         }
     }
-
 void weaponspread(){ // ПОД вопросом
 
 }

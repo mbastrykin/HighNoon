@@ -29,6 +29,6 @@ private:
     float coordinateYP;
     QString m_color = "green";
 
-    short int bullets = 6;
+    short int bullets = 12;
     Weapon *weapon;
 };

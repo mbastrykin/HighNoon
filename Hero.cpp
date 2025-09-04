@@ -20,6 +20,10 @@ void Hero::shooting() {
             emit colorChanged();
         });
     }
+    if (weapon->ammo()<= 0 ){
+
+        weapon->setAmmo(bullets);
+    }
 }
 
 void Hero::stopShooting() {
