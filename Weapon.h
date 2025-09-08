@@ -27,7 +27,7 @@ void weaponspread(){ // ПОД вопросом
 }
 
 signals:
-    void ammoChanged();
+void ammoChanged();
 
 private:
     short int *ammoPtr;

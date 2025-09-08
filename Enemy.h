@@ -15,7 +15,7 @@ public:
     int ammo() const { return weapon->ammo(); }
 
     Q_INVOKABLE void shooting();
-    Q_INVOKABLE void stopShooting();   // <-- добавляем
+    Q_INVOKABLE void stopShooting();
     Q_INVOKABLE void death();
     Q_INVOKABLE void animVictory();
 

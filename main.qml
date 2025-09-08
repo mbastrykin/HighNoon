@@ -5,8 +5,9 @@ import QtMultimedia
 
 ApplicationWindow {
     visible: true
-    width: 400
-    height: 600
+    //width: 400
+    //height: 600
+     visibility: "FullScreen"
     title: "HighNoon"
 
 
@@ -108,6 +109,7 @@ ApplicationWindow {
             onClicked: {
                 score = 0
                 settings.savedScore = score
+
             }
         }
 
