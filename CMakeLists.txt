@@ -21,7 +21,7 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(TestQtAndroid
+    qt_add_executable(HighNoon
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         TimerLogic.h
@@ -42,23 +42,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Enemy.h
         Shop.h
         Shop.cpp
-
     )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET TestQtAndroid APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
     if(ANDROID)
-        add_library(TestQtAndroid SHARED
+        add_library(HighNoon SHARED
             ${PROJECT_SOURCES}
         )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
-        add_executable(TestQtAndroid
+        add_executable(HighNoon
           ${PROJECT_SOURCES}
         )
     endif()
@@ -66,16 +59,13 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(TestQtAndroid
+target_link_libraries(HighNoon
   PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.TestQtAndroid)
+  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.HighNoon)
 endif()
-set_target_properties(TestQtAndroid PROPERTIES
+set_target_properties(HighNoon PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -84,11 +74,11 @@ set_target_properties(TestQtAndroid PROPERTIES
 )
 
 include(GNUInstallDirs)
-install(TARGETS TestQtAndroid
+install(TARGETS HighNoon
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_import_qml_plugins(TestQtAndroid)
-    qt_finalize_executable(TestQtAndroid)
-endif()
+    qt_import_qml_plugins(HighNoon)
+    qt_finalize_executable(HighNoon)
+endif()  # закрываем именно QT_VERSION_MAJOR EQUAL 6
