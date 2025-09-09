@@ -22,18 +22,23 @@ public:
 signals:
     void colorChanged();
     void ammoChanged();
-    void hit();   // попал
-    void miss();  // промах
+    void hit();
+    void miss();
 
 private:
     bool lifeEnemy = true;
+    bool reloading = false;
+
+    int reloadTime = 2500; // мс
+    int accuracy = 50;                 // меткость врага (0–100%)
+
     float coordinateXP;
     float coordinateYP;
 
-    QString m_color = "black";
+    short int bulletsInInventory = 24; // патроны врага в инвентаре
+    short int magazineSize = 6;        // вместимость магазина
 
-    short int bullets = 6;
-    int accuracy = 50; // меткость врага (0–100%)
+    QString m_color = "black";
 
     Weapon *weapon;
 };

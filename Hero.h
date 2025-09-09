@@ -28,7 +28,10 @@ signals:
 private:
     bool lifePlayer = true;
     bool reloading = false;
+
     int reloadTime = 2000; // мс
+    int healthPoint = 100;
+    int accuracy = 50;          // меткость игрока (0–50%)
 
     float coordinateXP;
     float coordinateYP;
@@ -36,7 +39,7 @@ private:
     QString m_color = "green";
 
     short int maxBullets = 24;  // максимальные патроны героя
-    int accuracy = 50;          // меткость игрока (0–50%)
+
 
     Weapon *weapon;
 };
