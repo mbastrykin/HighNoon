@@ -114,11 +114,11 @@ ApplicationWindow {
         }
 
 
-        Label {             //ВРЕМЯ
-            text: "Timer: " + timerLogic.seconds
-            font.pixelSize: 28
-            width: parent.width
-            horizontalAlignment: Text.AlignHCenter
-        }
+        //Label {             //ВРЕМЯ
+        //    text: "Timer: " + timerLogic.seconds
+        //    font.pixelSize: 28
+         //width: parent.width
+         //   horizontalAlignment: Text.AlignHCenter
+        //}
     }
 }
