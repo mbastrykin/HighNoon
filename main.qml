@@ -19,7 +19,7 @@ ApplicationWindow {
     property int score: settings.savedScore
 
     Text {          // ТЕКСТ ВЫСТРЕЛА
-        text: "Выстрел " + hero.ammo
+          text: "Ammo: " + hero.ammo
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.margins: 20

@@ -22,18 +22,21 @@ public:
 signals:
     void colorChanged();
     void ammoChanged();
-    void hit();      // сигнал: попал
-    void miss();     // сигнал: промах
+    void hit();
+    void miss();
 
 private:
     bool lifePlayer = true;
+    bool reloading = false;
+    int reloadTime = 2000; // мс
+
     float coordinateXP;
     float coordinateYP;
 
     QString m_color = "green";
 
-    short int bullets = 6;
-    int accuracy = 50; // меткость игрока (0–100%)
+    short int maxBullets = 24;  // максимальные патроны героя
+    int accuracy = 50;          // меткость игрока (0–50%)
 
     Weapon *weapon;
 };

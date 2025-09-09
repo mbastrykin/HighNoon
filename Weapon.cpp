@@ -1,8 +1,11 @@
 #include "Weapon.h"
 #include <QRandomGenerator>
 
-Weapon::Weapon(short int &ammo, short int chanceOfHit, QObject *parent)
-    : QObject(parent), ammoPtr(&ammo), m_chanceOfHit(chanceOfHit)
+Weapon::Weapon(short int &ammo, short int chanceOfHit, short int magSize, QObject *parent)
+    : QObject(parent),
+    ammoPtr(&ammo),
+    m_chanceOfHit(chanceOfHit),
+    magazineSize(magSize) // инициализация члена
 {
 }
 

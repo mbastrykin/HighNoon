@@ -1,19 +1,24 @@
 #include "Hero.h"
 #include <QTimer>
 #include <QRandomGenerator>
+#include <QDebug>
 
 Hero::Hero(float x, float y, QObject *parent)
     : QObject(parent), coordinateXP(x), coordinateYP(y)
 {
-    weapon = new Weapon(bullets, 80, this); // 80% базовый шанс оружия
+
+    short int currentAmmo = maxBullets;
+    weapon = new Weapon(currentAmmo, 80, 6,this); // шанс попадания 80%
     connect(weapon, &Weapon::ammoChanged, this, &Hero::ammoChanged);
 }
 
 void Hero::shooting() {
-    if (weapon->getAmmo() > 0) {
-        weapon->shoot(); // уменьшение патронов
+    if (reloading) return; // пока перезаряжаемся — стрелять нельзя
 
-        // проверка шанса попадания
+    if (weapon->getAmmo() > 0) {
+        weapon->shoot();
+
+        // проверка попадания
         int roll = QRandomGenerator::global()->bounded(100);
         int chanceToHit = (accuracy + weapon->getChanceOfHit()) / 2;
 
@@ -22,7 +27,7 @@ void Hero::shooting() {
         else
             emit miss();
 
-        // анимация выстрела (красный на 100 мс)
+        // анимация цвета
         m_color = "red";
         emit colorChanged();
         QTimer::singleShot(100, this, [this]() {
@@ -30,10 +35,25 @@ void Hero::shooting() {
             emit colorChanged();
         });
     }
+    else if (!reloading) {
+        if (maxBullets == 0) {
+            qDebug() << "No bullets left in inventory!";
+            return;
+        }
 
-    // перезарядка, если патронов нет
-    if (weapon->getAmmo() <= 0) {
-        weapon->setAmmo(bullets);
+        reloading = true;
+        qDebug() << "Reloading...";
+        QTimer::singleShot(reloadTime, this, [this]() {
+
+            short int toLoad = std::min(maxBullets, weapon->getMagazineSize());
+            weapon->setAmmo(toLoad);
+            maxBullets -= toLoad;
+
+            reloading = false;
+            qDebug() << "Reload complete";
+            qDebug() << "Ammo after reload:" << weapon->getAmmo();
+            qDebug() << "Bullets left in inventory:" << maxBullets;
+        });
     }
 }
 
@@ -42,9 +62,5 @@ void Hero::stopShooting() {
     emit colorChanged();
 }
 
-void Hero::death() {
-    lifePlayer = false;
-}
-
-void Hero::animVictory() {
-}
+void Hero::death() { lifePlayer = false; }
+void Hero::animVictory() {}

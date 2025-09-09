@@ -5,7 +5,7 @@
 Enemy::Enemy(float x, float y, QObject *parent)
     : QObject(parent), coordinateXP(x), coordinateYP(y)
 {
-    weapon = new Weapon(bullets, 70, this); // шанс оружия 70%
+    weapon = new Weapon(bullets, 70, 6,this); // шанс оружия 70%
     connect(weapon, &Weapon::ammoChanged, this, &Enemy::ammoChanged);
 
     // Таймер стрельбы врага
