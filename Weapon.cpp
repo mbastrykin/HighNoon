@@ -1,10 +1,31 @@
+#include "Weapon.h"
+#include <QRandomGenerator>
 
+Weapon::Weapon(short int &ammo, short int chanceOfHit, QObject *parent)
+    : QObject(parent), ammoPtr(&ammo), m_chanceOfHit(chanceOfHit)
+{
+}
 
-class Weapon{
+int Weapon::getAmmo() const {
+    return *ammoPtr;
+}
 
-    short int *ammo;
+void Weapon::setAmmo(int value) {
+    *ammoPtr = value;
+    emit ammoChanged();
+}
 
-    Weapon(short int &ammo){
-        this->ammo = &ammo;
+int Weapon::getChanceOfHit() const {
+    return m_chanceOfHit;
+}
+
+bool Weapon::shoot() {
+    if (*ammoPtr > 0) {
+        (*ammoPtr)--;
+        emit ammoChanged();
+
+        int roll = QRandomGenerator::global()->bounded(100); // 0..99
+        return roll < m_chanceOfHit; // true = попал
     }
-};
+    return false; // нет патронов — не выстрелил
+}

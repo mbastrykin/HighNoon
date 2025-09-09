@@ -21,6 +21,22 @@ int main(int argc, char *argv[])
     Hero hero(100, 100);
     Enemy enemy(100,100);
 
+    // Вывод в консоль (тест)
+    QObject::connect(&hero, &Hero::hit, [](){
+        qDebug() << "Hero: Hit!";
+    });
+    QObject::connect(&hero, &Hero::miss, [](){
+        qDebug() << "Hero: Miss!";
+    });
+
+    // Вывод в консоль (тест)
+    QObject::connect(&enemy, &Enemy::hit, [](){
+        qDebug() << "Enemy: Hit!";
+    });
+    QObject::connect(&enemy, &Enemy::miss, [](){
+        qDebug() << "Enemy: Miss!";
+    });
+
     engine.rootContext()->setContextProperty("hero", &hero); // <<< имя "hero"
     engine.rootContext()->setContextProperty("enemy", &enemy);
 

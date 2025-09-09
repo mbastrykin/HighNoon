@@ -5,9 +5,9 @@ import QtMultimedia
 
 ApplicationWindow {
     visible: true
-    //width: 400
-    //height: 600
-     visibility: "FullScreen"
+    width: 400
+    height: 600
+    // visibility: "FullScreen"
     title: "HighNoon"
 
 
@@ -114,11 +114,11 @@ ApplicationWindow {
         }
 
 
-        //Label {             //ВРЕМЯ
-        //    text: "Timer: " + timerLogic.seconds
-        //    font.pixelSize: 28
-         //width: parent.width
-         //   horizontalAlignment: Text.AlignHCenter
-        //}
+        Label {             //ВРЕМЯ
+            text: "Timer: " + timerLogic.seconds
+            font.pixelSize: 28
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+        }
     }
 }

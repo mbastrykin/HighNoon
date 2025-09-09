@@ -1,34 +1,23 @@
 #pragma once
 #include <QObject>
-#include <random>
 
 class Weapon : public QObject {
     Q_OBJECT
-    Q_PROPERTY(int ammo READ ammo NOTIFY ammoChanged)
+    Q_PROPERTY(int ammo READ getAmmo NOTIFY ammoChanged)
 
 public:
-    explicit Weapon(short int &ammo, QObject *parent = nullptr)
-        : QObject(parent), ammoPtr(&ammo) {}
+    explicit Weapon(short int &ammo, short int chanceOfHit, QObject *parent = nullptr);
 
-    int ammo() const { return *ammoPtr; }
-    void setAmmo(int value) {
-        *ammoPtr = value;
-        emit ammoChanged();
-    }
+    int getAmmo() const;
+    void setAmmo(int value);
+    int getChanceOfHit() const;
 
-    Q_INVOKABLE void shoot() {
-        if (*ammoPtr > 0) {
-            (*ammoPtr)--;
-            emit ammoChanged();
-        }
-    }
-void weaponspread(){ // ПОД вопросом
-
-}
+    Q_INVOKABLE bool shoot();   // true = попал, false = промах
 
 signals:
-void ammoChanged();
+    void ammoChanged();
 
 private:
-    short int *ammoPtr;
+    short int *ammoPtr;        // ссылка на патроны
+    short int m_chanceOfHit;   // шанс попадания (0–100%)
 };
