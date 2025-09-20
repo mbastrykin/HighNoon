@@ -7,32 +7,27 @@ Enemy::Enemy(float x, float y, int reloadTime, QObject *parent)
     : QObject(parent),
     coordinateXP(x),
     coordinateYP(y),
-    reloadTime(reloadTime)    // присваиваем
+    reloadTime(reloadTime)
 {
-    // всегда полный магазин
+    // сразу полный магазин
     short int initialAmmo = magazineSize;
+    weapon = new Weapon(initialAmmo, 50, magazineSize, this); // шанс попадания 50%
 
-    weapon = new Weapon(initialAmmo, 6, magazineSize, this);
-
-    // если на складе есть патроны — уменьшаем
-    if (bulletsInInventory > 0) {
-        short int toSub = std::min(bulletsInInventory, magazineSize);
-        bulletsInInventory -= toSub;
-    }
+    // уменьшаем запас в инвентаре
+    bulletsInInventory -= std::min(bulletsInInventory, magazineSize);
 
     connect(weapon, &Weapon::ammoChanged, this, &Enemy::ammoChanged);
 
-    int startDelay = 5000;
-    QTimer::singleShot(2000, this, [this, startDelay]() {
+    // Таймер автоматической стрельбы
+    QTimer::singleShot(2000, this, [this]() {
         QTimer *enemyTimer = new QTimer(this);
         connect(enemyTimer, &QTimer::timeout, this, &Enemy::shooting);
-        enemyTimer->start(100);
-
+        enemyTimer->start(100); // стрельба каждые 100 мс
     });
 }
 
 void Enemy::shooting() {
-    if (reloading) return; // нельзя стрелять во время перезарядки
+    if (reloading || !lifeEnemy) return;
 
     if (weapon->getAmmo() > 0) {
         weapon->shoot();
@@ -46,25 +41,38 @@ void Enemy::shooting() {
         else
             emit miss();
 
-        // анимация цвета при выстреле
-        m_color = "blue";
-        emit colorChanged();
-        QTimer::singleShot(100, this, [this]() {
-            m_color = "black";
+        // проверяем страх после выстрела
+        if (weapon->getAmmo() == 0) {
+            m_color = "green";    // страх — зелёный
             emit colorChanged();
-        });
-    }
-    else if (!reloading && bulletsInInventory > 0) {
+        } else {
+            // обычная анимация цвета при выстреле
+            m_color = "blue";
+            emit colorChanged();
+            QTimer::singleShot(100, this, [this]() {
+                m_color = "black";
+                emit colorChanged();
+            });
+        }
+        fear();
+    } else if (!reloading && bulletsInInventory > 0) {
         // начинаем перезарядку
         reloading = true;
         QTimer::singleShot(reloadTime, this, [this]() {
             short int toLoad = std::min(bulletsInInventory, magazineSize);
-            qDebug() << "Enemy is reloading";
             weapon->setAmmo(toLoad);
             bulletsInInventory -= toLoad;
             reloading = false;
-
+            qDebug() << "Enemy reloaded. Ammo:" << weapon->getAmmo();
         });
+    }
+}
+
+void Enemy::fear() {
+    if (weapon->getAmmo() == 0) {
+        qDebug() << "Enemy is scared: magazine empty!";
+        m_color = "green";
+        emit colorChanged();
     }
 }
 
@@ -80,13 +88,13 @@ void Enemy::takeDamage(int dmg) {
     if (health <= 0) {
         death();
         qDebug() << "Enemy died!";
-
     }
 }
 
-void Enemy::death(){
+void Enemy::death() {
+    lifeEnemy = false;
     m_color = "red";
     emit colorChanged();
 }
 
-void Enemy::animVictory() {}
+void Enemy::victory() {}

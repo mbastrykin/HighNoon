@@ -13,8 +13,8 @@ public:
     void setAmmo(int value);
     int getChanceOfHit() const;
 
-    Q_INVOKABLE bool shoot();   // true = попал, false = промах
-    int getDamage() const { return damage; } // добавляем метод для урона
+    Q_INVOKABLE bool shoot();
+    int getDamage() const { return damage; }
 
 signals:
     void ammoChanged();

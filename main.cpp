@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
         enemy.takeDamage(hero.weapon->getDamage());
     });
 
-    // Вывод в консоль (тест)
     QObject::connect(&hero, &Hero::hit, [](){
         qDebug() << "Hero: Hit!";
     });
@@ -35,7 +34,6 @@ int main(int argc, char *argv[])
         qDebug() << "Hero: Miss!";
     });
 
-    // Вывод в консоль (тест)
     QObject::connect(&enemy, &Enemy::hit, [](){
         qDebug() << "Enemy: Hit!";
     });
@@ -43,7 +41,7 @@ int main(int argc, char *argv[])
         qDebug() << "Enemy: Miss!";
     });
 
-    engine.rootContext()->setContextProperty("hero", &hero); // <<< имя "hero"
+    engine.rootContext()->setContextProperty("hero", &hero);
     engine.rootContext()->setContextProperty("enemy", &enemy);
 
     // Создаём QTimer, который каждую секунду вызывает tick()

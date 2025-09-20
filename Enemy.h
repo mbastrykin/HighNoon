@@ -9,7 +9,7 @@ class Enemy : public QObject {
     Q_PROPERTY(int ammo READ ammo NOTIFY ammoChanged)
 
 public:
-    explicit Enemy(float x = 0, float y = 0, int reloadTime = 0,QObject *parent = nullptr);
+    explicit Enemy(float x = 0, float y = 0, int reloadTime = 2000, QObject *parent = nullptr);
 
     QString color() const { return m_color; }
     int ammo() const { return weapon->getAmmo(); }
@@ -17,10 +17,10 @@ public:
     Q_INVOKABLE void shooting();
     Q_INVOKABLE void stopShooting();
     Q_INVOKABLE void death();
-    Q_INVOKABLE void animVictory();
+    Q_INVOKABLE void victory();
 
 public slots:
-      void takeDamage(int dmg);
+    void takeDamage(int dmg);
 
 signals:
     void colorChanged();
@@ -29,17 +29,19 @@ signals:
     void miss();
 
 private:
+    void fear(); //
+
     bool lifeEnemy = true;
     bool reloading = false;
 
     int reloadTime; // мс
-    int accuracy = 50;                 // меткость врага (0–100%)
+    int accuracy = 50; //меткость врага
     int health = 150;
 
     float coordinateXP;
     float coordinateYP;
 
-    short int bulletsInInventory = 12; // патроны врага в инвентаре
+    short int bulletsInInventory = 12; // запас патронов
     short int magazineSize = 6;        // вместимость магазина
 
     QString m_color = "black";
