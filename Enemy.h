@@ -9,7 +9,7 @@ class Enemy : public QObject {
     Q_PROPERTY(int ammo READ ammo NOTIFY ammoChanged)
 
 public:
-    explicit Enemy(float x = 0, float y = 0, QObject *parent = nullptr);
+    explicit Enemy(float x = 0, float y = 0, int reloadTime = 0,QObject *parent = nullptr);
 
     QString color() const { return m_color; }
     int ammo() const { return weapon->getAmmo(); }
@@ -29,13 +29,13 @@ private:
     bool lifeEnemy = true;
     bool reloading = false;
 
-    int reloadTime = 2500; // мс
+    int reloadTime; // мс
     int accuracy = 50;                 // меткость врага (0–100%)
 
     float coordinateXP;
     float coordinateYP;
 
-    short int bulletsInInventory = 24; // патроны врага в инвентаре
+    short int bulletsInInventory = 12; // патроны врага в инвентаре
     short int magazineSize = 6;        // вместимость магазина
 
     QString m_color = "black";

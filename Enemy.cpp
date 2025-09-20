@@ -3,20 +3,33 @@
 #include <QRandomGenerator>
 #include <QDebug>
 
-Enemy::Enemy(float x, float y, QObject *parent)
-    : QObject(parent), coordinateXP(x), coordinateYP(y)
+Enemy::Enemy(float x, float y, int reloadTime, QObject *parent)
+    : QObject(parent),
+    coordinateXP(x),
+    coordinateYP(y),
+    reloadTime(reloadTime)    // присваиваем
 {
+    // всегда полный магазин
+    short int initialAmmo = magazineSize;
 
-    short int initialAmmo = std::min(bulletsInInventory, magazineSize);
-    weapon = new Weapon(initialAmmo, 70, magazineSize, this); // шанс оружия 70%
-    bulletsInInventory -= initialAmmo;
+    weapon = new Weapon(initialAmmo, 6, magazineSize, this);
+
+    // если на складе есть патроны — уменьшаем
+    if (bulletsInInventory > 0) {
+        short int toSub = std::min(bulletsInInventory, magazineSize);
+        bulletsInInventory -= toSub;
+    }
 
     connect(weapon, &Weapon::ammoChanged, this, &Enemy::ammoChanged);
 
-    // Таймер стрельбы врага
-    QTimer *enemyTimer = new QTimer(this);
-    connect(enemyTimer, &QTimer::timeout, this, &Enemy::shooting);
-    enemyTimer->start(100); // каждые 100 мс
+    int startDelay = 5000;
+    QTimer::singleShot(2000, this, [this, startDelay]() {
+
+        QTimer *enemyTimer = new QTimer(this);
+        connect(enemyTimer, &QTimer::timeout, this, &Enemy::shooting);
+        enemyTimer->start(100);
+
+    });
 }
 
 void Enemy::shooting() {
@@ -51,6 +64,7 @@ void Enemy::shooting() {
             weapon->setAmmo(toLoad);
             bulletsInInventory -= toLoad;
             reloading = false;
+
         });
     }
 }
