@@ -24,7 +24,6 @@ Enemy::Enemy(float x, float y, int reloadTime, QObject *parent)
 
     int startDelay = 5000;
     QTimer::singleShot(2000, this, [this, startDelay]() {
-
         QTimer *enemyTimer = new QTimer(this);
         connect(enemyTimer, &QTimer::timeout, this, &Enemy::shooting);
         enemyTimer->start(100);
@@ -74,8 +73,20 @@ void Enemy::stopShooting() {
     emit colorChanged();
 }
 
-void Enemy::death() {
-    lifeEnemy = false;
+void Enemy::takeDamage(int dmg) {
+    health -= dmg;
+    qDebug() << "Enemy HP:" << health;
+
+    if (health <= 0) {
+        death();
+        qDebug() << "Enemy died!";
+
+    }
+}
+
+void Enemy::death(){
+    m_color = "red";
+    emit colorChanged();
 }
 
 void Enemy::animVictory() {}

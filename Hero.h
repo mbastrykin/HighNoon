@@ -2,6 +2,7 @@
 #include <QObject>
 #include <QString>
 #include "Weapon.h"
+#include "Enemy.h"
 
 class Hero : public QObject {
     Q_OBJECT
@@ -10,7 +11,8 @@ class Hero : public QObject {
 
 public:
     explicit Hero(float x = 0, float y = 0, QObject *parent = nullptr);
-
+    Enemy *targetEnemy = nullptr;
+     Weapon *weapon;
     QString color() const { return m_color; }
     int ammo() const { return weapon->getAmmo(); }
 
@@ -41,5 +43,5 @@ private:
     short int maxBullets = 24;  // максимальные патроны героя
 
 
-    Weapon *weapon;
+
 };

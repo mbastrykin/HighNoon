@@ -22,11 +22,14 @@ void Hero::shooting() {
         int roll = QRandomGenerator::global()->bounded(100);
         int chanceToHit = (accuracy + weapon->getChanceOfHit()) / 2;
 
-        if (roll < chanceToHit)
+        if (roll < chanceToHit) {
             emit hit();
+            if (targetEnemy) {
+                targetEnemy->takeDamage(weapon->getDamage());
+            }
+        }
         else
             emit miss();
-
         // анимация цвета
         m_color = "red";
         emit colorChanged();
@@ -55,6 +58,7 @@ void Hero::shooting() {
             qDebug() << "Bullets left in inventory:" << maxBullets;
         });
     }
+
 }
 
 void Hero::stopShooting() {

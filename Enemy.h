@@ -19,6 +19,9 @@ public:
     Q_INVOKABLE void death();
     Q_INVOKABLE void animVictory();
 
+public slots:
+      void takeDamage(int dmg);
+
 signals:
     void colorChanged();
     void ammoChanged();
@@ -31,6 +34,7 @@ private:
 
     int reloadTime; // мс
     int accuracy = 50;                 // меткость врага (0–100%)
+    int health = 150;
 
     float coordinateXP;
     float coordinateYP;

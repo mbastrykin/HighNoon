@@ -19,7 +19,13 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("timerLogic", &timerLogic);
 
     Hero hero(100, 100);
-    Enemy enemy(100,100);
+    Enemy enemy(100,100, 1000);
+
+    hero.targetEnemy = &enemy;
+
+    QObject::connect(&hero, &Hero::hit, [&enemy, &hero](){
+        enemy.takeDamage(hero.weapon->getDamage());
+    });
 
     // Вывод в консоль (тест)
     QObject::connect(&hero, &Hero::hit, [](){
