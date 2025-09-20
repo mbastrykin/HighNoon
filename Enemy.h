@@ -29,20 +29,20 @@ signals:
     void miss();
 
 private:
-    void fear(); //
+    void fear();
 
     bool lifeEnemy = true;
     bool reloading = false;
 
     int reloadTime; // мс
-    int accuracy = 50; //меткость врага
+    int accuracy = 50;
     int health = 150;
 
     float coordinateXP;
     float coordinateYP;
 
-    short int bulletsInInventory = 12; // запас патронов
-    short int magazineSize = 6;        // вместимость магазина
+    short int bulletsInInventory = 12;
+    short int magazineSize = 6;
 
     QString m_color = "black";
 

@@ -11,8 +11,10 @@ class Hero : public QObject {
 
 public:
     explicit Hero(float x = 0, float y = 0, QObject *parent = nullptr);
+
+    Weapon *weapon;
     Enemy *targetEnemy = nullptr;
-     Weapon *weapon;
+
     QString color() const { return m_color; }
     int ammo() const { return weapon->getAmmo(); }
 
@@ -31,17 +33,14 @@ private:
     bool lifePlayer = true;
     bool reloading = false;
 
-    int reloadTime = 2000; // мс
+    int reloadTime = 2000;
     int healthPoint = 100;
-    int accuracy = 50;          // меткость игрока (0–50%)
+    int accuracy = 50;
 
     float coordinateXP;
     float coordinateYP;
 
     QString m_color = "green";
 
-    short int maxBullets = 24;  // максимальные патроны героя
-
-
-
+    short int maxBullets = 24;
 };

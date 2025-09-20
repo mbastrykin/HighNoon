@@ -9,11 +9,10 @@ Enemy::Enemy(float x, float y, int reloadTime, QObject *parent)
     coordinateYP(y),
     reloadTime(reloadTime)
 {
-    // сразу полный магазин
+    // магазин сразу полный
     short int initialAmmo = magazineSize;
-    weapon = new Weapon(initialAmmo, 50, magazineSize, this); // шанс попадания 50%
+    weapon = new Weapon(initialAmmo, 50, magazineSize, this);
 
-    // уменьшаем запас в инвентаре
     bulletsInInventory -= std::min(bulletsInInventory, magazineSize);
 
     connect(weapon, &Weapon::ammoChanged, this, &Enemy::ammoChanged);
@@ -22,7 +21,7 @@ Enemy::Enemy(float x, float y, int reloadTime, QObject *parent)
     QTimer::singleShot(2000, this, [this]() {
         QTimer *enemyTimer = new QTimer(this);
         connect(enemyTimer, &QTimer::timeout, this, &Enemy::shooting);
-        enemyTimer->start(100); // стрельба каждые 100 мс
+      enemyTimer->start(100);
     });
 }
 
@@ -41,22 +40,21 @@ void Enemy::shooting() {
         else
             emit miss();
 
-        // проверяем страх после выстрела
+        // Анимация цвета: синий при выстреле, зелёный если страх
         if (weapon->getAmmo() == 0) {
-            m_color = "green";    // страх — зелёный
+            m_color = "green";  // страх
             emit colorChanged();
+            qDebug() << "Enemy is scared: magazine empty!";
         } else {
-            // обычная анимация цвета при выстреле
-            m_color = "blue";
+            m_color = "blue";   // обычный выстрел
             emit colorChanged();
             QTimer::singleShot(100, this, [this]() {
                 m_color = "black";
                 emit colorChanged();
             });
         }
-        fear();
+
     } else if (!reloading && bulletsInInventory > 0) {
-        // начинаем перезарядку
         reloading = true;
         QTimer::singleShot(reloadTime, this, [this]() {
             short int toLoad = std::min(bulletsInInventory, magazineSize);
@@ -70,7 +68,6 @@ void Enemy::shooting() {
 
 void Enemy::fear() {
     if (weapon->getAmmo() == 0) {
-        qDebug() << "Enemy is scared: magazine empty!";
         m_color = "green";
         emit colorChanged();
     }
@@ -84,17 +81,14 @@ void Enemy::stopShooting() {
 void Enemy::takeDamage(int dmg) {
     health -= dmg;
     qDebug() << "Enemy HP:" << health;
-
-    if (health <= 0) {
-        death();
-        qDebug() << "Enemy died!";
-    }
+    if (health <= 0) death();
 }
 
 void Enemy::death() {
     lifeEnemy = false;
     m_color = "red";
     emit colorChanged();
+    qDebug() << "Enemy died!";
 }
 
 void Enemy::victory() {}
